@@ -17,22 +17,29 @@ public class MyWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1, false);
         GameStats.frame = 0;
-        GameStats.health = 10;
+        GameStats.health = 3;
+        GameStats.goobers = 0;
         addObject(new Blade(), 0, 0);
-        Goober[] goobers = new Goober[40];
         for(int i = 0; i < 40; i++){
-            goobers[i] = new Goober();
         }
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 5; j++){
-                addObject(goobers[10*i + j], 60*j + 20, i*40 + 100);
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 10; j++){
+                addObject(new Goober(), 60*j + 20, i*40 + 100);
+                GameStats.goobers++;
             }
         }
     }
     public void act(){
         
         GameStats.frame++;
-        showText(GameStats.frame + "", 100, 100);
+        
+        if(GameStats.health == 0){
+            Greenfoot.setWorld(new GameOver());
+        }
+        if(GameStats.goobers == 0){
+            Greenfoot.setWorld(new LevelTwo());
+        }
+        showText("Health: " + GameStats.health, 300, 12);
         
  
             
